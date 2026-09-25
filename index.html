@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>VELUX — Fashion Store</title>
+<meta name="description" content="VELUX — premium men's fashion, shoes and women's fashion.">
+<style>
+:root{--bg:#f7f7f5;--ink:#111;--muted:#707070;--card:#fff;--line:#e9e9e7;--accent:#111}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Arial,sans-serif}
+button,input,select{font:inherit}.top{background:#111;color:#fff;text-align:center;padding:8px;font-size:12px;letter-spacing:.4px}
+header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav{max-width:1200px;margin:auto;display:flex;align-items:center;justify-content:space-between;padding:15px 18px}
+.logo{font-weight:900;letter-spacing:5px;font-size:22px}.navlinks{display:flex;gap:8px}.navlinks button,.cartbtn{border:0;background:transparent;padding:10px 12px;cursor:pointer}
+.cartbtn{font-weight:800;border:1px solid #ddd;border-radius:999px}
+.hero{max-width:1200px;margin:auto;padding:54px 18px 30px;display:grid;grid-template-columns:1.15fr .85fr;gap:30px;align-items:center}
+.hero h1{font-size:clamp(42px,7vw,82px);line-height:.92;margin:0 0 20px;letter-spacing:-4px}
+.hero p{color:#555;max-width:520px;font-size:16px;line-height:1.6}.hero .tag{display:inline-block;background:#111;color:#fff;padding:7px 11px;border-radius:999px;font-size:12px;font-weight:800}
+.hero-art{border-radius:28px;overflow:hidden;min-height:360px;background:#ddd;position:relative}
+.hero-art img{width:100%;height:100%;object-fit:cover;display:block}
+.container{max-width:1200px;margin:auto;padding:0 18px 70px}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin:10px 0 22px}
+.tabs{display:flex;gap:7px;overflow:auto}.tab{padding:10px 16px;border:1px solid #ddd;background:#fff;border-radius:999px;cursor:pointer;white-space:nowrap}.tab.active{background:#111;color:#fff;border-color:#111}
+.search{border:1px solid #ddd;background:#fff;border-radius:999px;padding:11px 15px;min-width:220px;outline:none}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;transition:.2s;position:relative}
+.card:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,0,0,.07)}
+.pic{aspect-ratio:4/5;background:#eee;position:relative;overflow:hidden}.pic img{width:100%;height:100%;object-fit:cover;display:block}
+.watermark{position:absolute;top:10px;right:10px;background:rgba(255,255,255,.78);padding:4px 7px;border-radius:7px;font-size:9px;letter-spacing:2px;font-weight:900}
+.badge{position:absolute;left:10px;top:10px;background:#111;color:#fff;border-radius:7px;padding:5px 7px;font-size:10px;font-weight:800}
+.info{padding:13px}.name{font-weight:800;font-size:14px;margin-bottom:8px}.price{display:flex;gap:7px;align-items:center;flex-wrap:wrap}.old{text-decoration:line-through;color:#888;font-size:12px}.new{font-size:18px;font-weight:900}.off{font-size:10px;font-weight:900;color:#c00;background:#fff0f0;padding:4px 6px;border-radius:6px}
+.add{margin-top:12px;width:100%;border:0;background:#111;color:#fff;border-radius:11px;padding:11px;cursor:pointer;font-weight:800}
+.drawer,.modal{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:50;display:none}.drawer.open,.modal.open{display:block}
+.panel{position:absolute;right:0;top:0;height:100%;width:min(430px,94vw);background:#fff;padding:20px;overflow:auto}
+.modalbox{width:min(560px,94vw);background:#fff;margin:6vh auto;padding:22px;border-radius:20px;max-height:88vh;overflow:auto}
+.close{float:right;border:0;background:#eee;border-radius:50%;width:34px;height:34px;cursor:pointer}
+.cartitem{display:grid;grid-template-columns:65px 1fr auto;gap:10px;padding:12px 0;border-bottom:1px solid #eee}.cartitem img{width:65px;height:80px;object-fit:cover;border-radius:9px}.qty button{border:1px solid #ddd;background:#fff;border-radius:6px;padding:2px 7px}
+.total{display:flex;justify-content:space-between;font-size:20px;font-weight:900;margin:20px 0}
+.primary{width:100%;border:0;background:#111;color:#fff;padding:14px;border-radius:12px;font-weight:900;cursor:pointer}
+.field{margin:10px 0}.field label{display:block;font-size:12px;font-weight:800;margin-bottom:5px}.field input,.field textarea,.field select{width:100%;border:1px solid #ddd;border-radius:10px;padding:11px;outline:none}.field textarea{min-height:80px;resize:vertical}
+.note{font-size:12px;color:#666;line-height:1.5;background:#f7f7f7;border-radius:10px;padding:10px;margin:10px 0}
+footer{background:#111;color:#fff;padding:40px 18px}.foot{max-width:1200px;margin:auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}.small{color:#aaa;font-size:12px}
+.empty{text-align:center;padding:60px;color:#777;grid-column:1/-1}
+@media(max-width:900px){.grid{grid-template-columns:repeat(3,1fr)}.hero{grid-template-columns:1fr}.hero-art{min-height:280px}}
+@media(max-width:600px){.grid{grid-template-columns:repeat(2,1fr);gap:10px}.navlinks{display:none}.search{width:100%}.toolbar{align-items:stretch}.hero{padding-top:35px}.hero h1{letter-spacing:-2px}.info{padding:10px}.new{font-size:16px}}
+</style>
+</head>
+<body>
+<div class="top">VELUX • PREPAID ORDERS • FAST FASHION DELIVERY</div>
+<header><div class="nav">
+  <div class="logo">VELUX</div>
+  <div class="navlinks"><button onclick="setCat('all')">Shop</button><button onclick="setCat('men')">Men</button><button onclick="setCat('shoes')">Shoes</button><button onclick="setCat('women')">Women</button></div>
+  <button class="cartbtn" onclick="openCart()">Bag <span id="count">0</span></button>
+</div></header>
+
+<section class="hero">
+  <div><span class="tag">NEW COLLECTION</span><h1>STYLE.<br>SIMPLIFIED.</h1><p>Discover VELUX fashion, shoes and women's collection. Every product shows the original price, sale price and discount clearly.</p><button class="primary" style="width:auto;padding:13px 22px" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">Shop Collection</button></div>
+  <div class="hero-art"><img src="images/product-01.jpg" alt="VELUX fashion"></div>
+</section>
+
+<main id="shop" class="container">
+  <div class="toolbar"><div class="tabs">
+    <button class="tab active" data-cat="all" onclick="setCat('all')">All 73</button>
+    <button class="tab" data-cat="men" onclick="setCat('men')">Men 26</button>
+    <button class="tab" data-cat="shoes" onclick="setCat('shoes')">Shoes 27</button>
+    <button class="tab" data-cat="women" onclick="setCat('women')">Women 20</button>
+  </div><input id="search" class="search" placeholder="Search products..." oninput="render()"></div>
+  <div id="grid" class="grid"></div>
+</main>
+
+<div id="drawer" class="drawer" onclick="if(event.target===this)closeCart()"><div class="panel">
+  <button class="close" onclick="closeCart()">×</button><h2>Your Bag</h2><div id="cart"></div><div class="total"><span>Total</span><span id="total">₹0</span></div>
+  <button class="primary" onclick="checkout()">Proceed to Prepaid Checkout</button>
+</div></div>
+
+<div id="modal" class="modal" onclick="if(event.target===this)closeCheckout()"><div class="modalbox">
+  <button class="close" onclick="closeCheckout()">×</button><h2>Prepaid Order</h2>
+  <div id="summary" class="note"></div>
+  <div class="field"><label>Customer Name</label><input id="name" required></div>
+  <div class="field"><label>Mobile Number</label><input id="mobile" inputmode="tel" required></div>
+  <div class="field"><label>Full Address</label><textarea id="address" required></textarea></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div class="field"><label>City</label><input id="city" required></div><div class="field"><label>State</label><input id="state" value="Gujarat" required></div></div>
+  <div class="field"><label>Pincode</label><input id="pincode" inputmode="numeric" required></div>
+  <div class="field"><label>Payment Reference / UTR</label><input id="utr" placeholder="Enter after payment"></div>
+  <div class="note">1) Tap Pay Now and complete the UPI payment. 2) Return here. 3) Enter the UTR/reference and submit the order. Payment status should be verified before dispatch.</div>
+  <button class="primary" onclick="payNow()">Pay ₹<span id="payamt">0</span> via UPI</button>
+  <button class="primary" style="margin-top:8px;background:#f0f0f0;color:#111" onclick="submitOrder()">Submit Order Details</button>
+  <p class="small" style="color:#777;margin-top:12px">UPI: BHARATPE.9J0M0Y1G1S693577@unitype</p>
+</div></div>
+
+<footer><div class="foot"><div><div class="logo">VELUX</div><p class="small">Fashion • Shoes • Women's Collection</p></div><div class="small">Prepaid orders only • © 2026 VELUX</div></div></footer>
+
+<script>
+const PRODUCTS = [{"id": 1, "category": "men", "name": "Men Collection 1", "image": "images/product-01.jpg", "original": 2332, "price": 1399, "discount": 40}, {"id": 2, "category": "men", "name": "Men Collection 2", "image": "images/product-02.jpg", "original": 2000, "price": 1200, "discount": 40}, {"id": 3, "category": "men", "name": "Men Collection 3", "image": "images/product-03.jpg", "original": 2417, "price": 1450, "discount": 40}, {"id": 4, "category": "men", "name": "Men Collection 4", "image": "images/product-04.jpg", "original": 3667, "price": 2200, "discount": 40}, {"id": 5, "category": "men", "name": "Men Collection 5", "image": "images/product-05.jpg", "original": 998, "price": 599, "discount": 40}, {"id": 6, "category": "men", "name": "Men Collection 6", "image": "images/product-06.jpg", "original": 665, "price": 399, "discount": 40}, {"id": 7, "category": "men", "name": "Men Collection 7", "image": "images/product-07.jpg", "original": 1998, "price": 1199, "discount": 40}, {"id": 8, "category": "men", "name": "Men Collection 8", "image": "images/product-08.jpg", "original": 748, "price": 449, "discount": 40}, {"id": 9, "category": "men", "name": "Men Collection 9", "image": "images/product-09.jpg", "original": 582, "price": 349, "discount": 40}, {"id": 10, "category": "men", "name": "Men Collection 10", "image": "images/product-10.jpg", "original": 582, "price": 349, "discount": 40}, {"id": 11, "category": "men", "name": "Men Collection 11", "image": "images/product-11.jpg", "original": 5000, "price": 2500, "discount": 50}, {"id": 12, "category": "men", "name": "Men Collection 12", "image": "images/product-12.jpg", "original": 1798, "price": 899, "discount": 50}, {"id": 13, "category": "men", "name": "Men Collection 13", "image": "images/product-13.jpg", "original": 898, "price": 449, "discount": 50}, {"id": 14, "category": "men", "name": "Men Collection 14", "image": "images/product-14.jpg", "original": 1398, "price": 699, "discount": 50}, {"id": 15, "category": "men", "name": "Men Collection 15", "image": "images/product-15.jpg", "original": 1398, "price": 699, "discount": 50}, {"id": 16, "category": "men", "name": "Men Collection 16", "image": "images/product-16.jpg", "original": 2598, "price": 1299, "discount": 50}, {"id": 17, "category": "men", "name": "Men Collection 17", "image": "images/product-17.jpg", "original": 3280, "price": 1640, "discount": 50}, {"id": 18, "category": "men", "name": "Men Collection 18", "image": "images/product-18.jpg", "original": 4800, "price": 2400, "discount": 50}, {"id": 19, "category": "men", "name": "Men Collection 19", "image": "images/product-19.jpg", "original": 4280, "price": 2140, "discount": 50}, {"id": 20, "category": "men", "name": "Men Collection 20", "image": "images/product-20.jpg", "original": 2920, "price": 1460, "discount": 50}, {"id": 21, "category": "men", "name": "Men Collection 21", "image": "images/product-21.jpg", "original": 5360, "price": 2680, "discount": 50}, {"id": 22, "category": "men", "name": "Men Collection 22", "image": "images/product-22.jpg", "original": 2760, "price": 1380, "discount": 50}, {"id": 23, "category": "men", "name": "Men Collection 23", "image": "images/product-23.jpg", "original": 3600, "price": 1800, "discount": 50}, {"id": 24, "category": "men", "name": "Men Collection 24", "image": "images/product-24.jpg", "original": 3880, "price": 1940, "discount": 50}, {"id": 25, "category": "men", "name": "Men Collection 25", "image": "images/product-25.jpg", "original": 4400, "price": 2200, "discount": 50}, {"id": 26, "category": "men", "name": "Men Collection 26", "image": "images/product-26.jpg", "original": 3720, "price": 1860, "discount": 50}, {"id": 27, "category": "shoes", "name": "Shoes Collection 27", "image": "images/product-27.jpg", "original": 1900, "price": 950, "discount": 50}, {"id": 28, "category": "shoes", "name": "Shoes Collection 28", "image": "images/product-28.jpg", "original": 1500, "price": 750, "discount": 50}, {"id": 29, "category": "shoes", "name": "Shoes Collection 29", "image": "images/product-29.jpg", "original": 3200, "price": 1600, "discount": 50}, {"id": 30, "category": "shoes", "name": "Shoes Collection 30", "image": "images/product-30.jpg", "original": 3450, "price": 1725, "discount": 50}, {"id": 31, "category": "shoes", "name": "Shoes Collection 31", "image": "images/product-31.jpg", "original": 5900, "price": 2950, "discount": 50}, {"id": 32, "category": "shoes", "name": "Shoes Collection 32", "image": "images/product-32.jpg", "original": 1900, "price": 950, "discount": 50}, {"id": 33, "category": "shoes", "name": "Shoes Collection 33", "image": "images/product-33.jpg", "original": 2900, "price": 1450, "discount": 50}, {"id": 34, "category": "shoes", "name": "Shoes Collection 34", "image": "images/product-34.jpg", "original": 1950, "price": 975, "discount": 50}, {"id": 35, "category": "shoes", "name": "Shoes Collection 35", "image": "images/product-35.jpg", "original": 1850, "price": 925, "discount": 50}, {"id": 36, "category": "shoes", "name": "Shoes Collection 36", "image": "images/product-36.jpg", "original": 1650, "price": 825, "discount": 50}, {"id": 37, "category": "shoes", "name": "Shoes Collection 37", "image": "images/product-37.jpg", "original": 1600, "price": 960, "discount": 40}, {"id": 38, "category": "shoes", "name": "Shoes Collection 38", "image": "images/product-38.jpg", "original": 1850, "price": 1110, "discount": 40}, {"id": 39, "category": "shoes", "name": "Shoes Collection 39", "image": "images/product-39.jpg", "original": 2200, "price": 1320, "discount": 40}, {"id": 40, "category": "shoes", "name": "Shoes Collection 40", "image": "images/product-40.jpg", "original": 2560, "price": 1536, "discount": 40}, {"id": 41, "category": "shoes", "name": "Shoes Collection 41", "image": "images/product-41.jpg", "original": 12800, "price": 7680, "discount": 40}, {"id": 42, "category": "shoes", "name": "Shoes Collection 42", "image": "images/product-42.jpg", "original": 14500, "price": 8700, "discount": 40}, {"id": 43, "category": "shoes", "name": "Shoes Collection 43", "image": "images/product-43.jpg", "original": 15000, "price": 9000, "discount": 40}, {"id": 44, "category": "shoes", "name": "Shoes Collection 44", "image": "images/product-44.jpg", "original": 13000, "price": 7800, "discount": 40}, {"id": 45, "category": "shoes", "name": "Shoes Collection 45", "image": "images/product-45.jpg", "original": 2200, "price": 1320, "discount": 40}, {"id": 46, "category": "shoes", "name": "Shoes Collection 46", "image": "images/product-46.jpg", "original": 1940, "price": 1164, "discount": 40}, {"id": 47, "category": "shoes", "name": "Shoes Collection 47", "image": "images/product-47.jpg", "original": 4800, "price": 1440, "discount": 70}, {"id": 48, "category": "shoes", "name": "Shoes Collection 48", "image": "images/product-48.jpg", "original": 4600, "price": 1380, "discount": 70}, {"id": 49, "category": "shoes", "name": "Shoes Collection 49", "image": "images/product-49.jpg", "original": 5460, "price": 1638, "discount": 70}, {"id": 50, "category": "shoes", "name": "Shoes Collection 50", "image": "images/product-50.jpg", "original": 2000, "price": 600, "discount": 70}, {"id": 51, "category": "shoes", "name": "Shoes Collection 51", "image": "images/product-51.jpg", "original": 1400, "price": 420, "discount": 70}, {"id": 52, "category": "shoes", "name": "Shoes Collection 52", "image": "images/product-52.jpg", "original": 1460, "price": 438, "discount": 70}, {"id": 53, "category": "shoes", "name": "Shoes Collection 53", "image": "images/product-53.jpg", "original": 2280, "price": 684, "discount": 70}, {"id": 54, "category": "women", "name": "Women Collection 54", "image": "images/product-54.jpg", "original": 2200, "price": 550, "discount": 75}, {"id": 55, "category": "women", "name": "Women Collection 55", "image": "images/product-55.jpg", "original": 2000, "price": 500, "discount": 75}, {"id": 56, "category": "women", "name": "Women Collection 56", "image": "images/product-56.jpg", "original": 1800, "price": 450, "discount": 75}, {"id": 57, "category": "women", "name": "Women Collection 57", "image": "images/product-57.jpg", "original": 2600, "price": 650, "discount": 75}, {"id": 58, "category": "women", "name": "Women Collection 58", "image": "images/product-58.jpg", "original": 2300, "price": 575, "discount": 75}, {"id": 59, "category": "women", "name": "Women Collection 59", "image": "images/product-59.jpg", "original": 2800, "price": 700, "discount": 75}, {"id": 60, "category": "women", "name": "Women Collection 60", "image": "images/product-60.jpg", "original": 4000, "price": 1000, "discount": 75}, {"id": 61, "category": "women", "name": "Women Collection 61", "image": "images/product-61.jpg", "original": 2960, "price": 740, "discount": 75}, {"id": 62, "category": "women", "name": "Women Collection 62", "image": "images/product-62.jpg", "original": 2400, "price": 600, "discount": 75}, {"id": 63, "category": "women", "name": "Women Collection 63", "image": "images/product-63.jpg", "original": 2800, "price": 700, "discount": 75}, {"id": 64, "category": "women", "name": "Women Collection 64", "image": "images/product-64.jpg", "original": 2140, "price": 749, "discount": 65}, {"id": 65, "category": "women", "name": "Women Collection 65", "image": "images/product-65.jpg", "original": 4800, "price": 1680, "discount": 65}, {"id": 66, "category": "women", "name": "Women Collection 66", "image": "images/product-66.jpg", "original": 5200, "price": 1820, "discount": 65}, {"id": 67, "category": "women", "name": "Women Collection 67", "image": "images/product-67.jpg", "original": 5600, "price": 1960, "discount": 65}, {"id": 68, "category": "women", "name": "Women Collection 68", "image": "images/product-68.jpg", "original": 2400, "price": 840, "discount": 65}, {"id": 69, "category": "women", "name": "Women Collection 69", "image": "images/product-69.jpg", "original": 2100, "price": 735, "discount": 65}, {"id": 70, "category": "women", "name": "Women Collection 70", "image": "images/product-70.jpg", "original": 1800, "price": 630, "discount": 65}, {"id": 71, "category": "women", "name": "Women Collection 71", "image": "images/product-71.jpg", "original": 3600, "price": 1260, "discount": 65}, {"id": 72, "category": "women", "name": "Women Collection 72", "image": "images/product-72.jpg", "original": 2460, "price": 861, "discount": 65}, {"id": 73, "category": "women", "name": "Women Collection 73", "image": "images/product-73.jpg", "original": 1950, "price": 682, "discount": 65}];
+const UPI_ID = "BHARATPE.9J0M0Y1G1S693577@unitype";
+const AIRTABLE_FORM_URL = ""; // Paste your Airtable public form URL here when ready.
+let category="all", cart=JSON.parse(localStorage.getItem("velux_cart")||"[]");
+
+function money(n){return "₹"+Number(n).toLocaleString("en-IN")}
+function setCat(c){category=c;document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.cat===c));render()}
+function render(){
+  const q=(document.getElementById("search").value||"").toLowerCase();
+  const list=PRODUCTS.filter(p=>(category==="all"||p.category===category)&&p.name.toLowerCase().includes(q));
+  const grid=document.getElementById("grid");
+  grid.innerHTML=list.length?list.map(p=>`<article class="card">
+    <div class="pic"><img src="${p.image}" loading="lazy" alt="${p.name}"><span class="watermark">VELUX</span><span class="badge">${p.discount}% OFF</span></div>
+    <div class="info"><div class="name">${p.name}</div><div class="price"><span class="old">${money(p.original)}</span><span class="new">${money(p.price)}</span><span class="off">${p.discount}% OFF</span></div><button class="add" onclick="add(${p.id})">Add to Bag</button></div>
+  </article>`).join(""):`<div class="empty">No products found.</div>`;
+}
+function add(id){const p=PRODUCTS.find(x=>x.id===id);const x=cart.find(x=>x.id===id);if(x)x.qty++;else cart.push({id,qty:1});save();openCart()}
+function save(){localStorage.setItem("velux_cart",JSON.stringify(cart));document.getElementById("count").textContent=cart.reduce((s,x)=>s+x.qty,0)}
+function openCart(){document.getElementById("drawer").classList.add("open");renderCart()}
+function closeCart(){document.getElementById("drawer").classList.remove("open")}
+function renderCart(){
+ const el=document.getElementById("cart"); let total=0;
+ if(!cart.length){el.innerHTML='<p class="small">Your bag is empty.</p>';document.getElementById("total").textContent="₹0";return}
+ el.innerHTML=cart.map(x=>{const p=PRODUCTS.find(y=>y.id===x.id);total+=p.price*x.qty;return `<div class="cartitem"><img src="${p.image}"><div><b>${p.name}</b><div>${money(p.price)} × ${x.qty}</div><div class="qty"><button onclick="change(${p.id},-1)">−</button> <button onclick="change(${p.id},1)">+</button></div></div><button onclick="removeItem(${p.id})" style="border:0;background:none">×</button></div>`}).join("");
+ document.getElementById("total").textContent=money(total);document.getElementById("count").textContent=cart.reduce((s,x)=>s+x.qty,0)
+}
+function change(id,d){const x=cart.find(x=>x.id===id);if(!x)return;x.qty+=d;if(x.qty<=0)cart=cart.filter(x=>x.id!==id);save();renderCart()}
+function removeItem(id){cart=cart.filter(x=>x.id!==id);save();renderCart()}
+function cartTotal(){return cart.reduce((s,x)=>{const p=PRODUCTS.find(y=>y.id===x.id);return s+p.price*x.qty},0)}
+function checkout(){
+ if(!cart.length){alert("Bag is empty.");return}
+ closeCart();document.getElementById("modal").classList.add("open");document.getElementById("payamt").textContent=cartTotal().toLocaleString("en-IN");
+ document.getElementById("summary").textContent=cart.map(x=>{const p=PRODUCTS.find(y=>y.id===x.id);return `${p.name} × ${x.qty}`}).join(" • ")
+}
+function closeCheckout(){document.getElementById("modal").classList.remove("open")}
+function payNow(){
+ const amount=cartTotal();
+ const url=`upi://pay?pa=${encodeURIComponent(UPI_ID)}&pn=${encodeURIComponent("VELUX")}&am=${amount}&cu=INR`;
+ window.location.href=url;
+}
+function submitOrder(){
+ const data={orderDate:new Date().toISOString(),items:cart.map(x=>{const p=PRODUCTS.find(y=>y.id===x.id);return {name:p.name,price:p.price,qty:x.qty}}),total:cartTotal(),
+ name:document.getElementById("name").value.trim(),mobile:document.getElementById("mobile").value.trim(),address:document.getElementById("address").value.trim(),city:document.getElementById("city").value.trim(),state:document.getElementById("state").value.trim(),pincode:document.getElementById("pincode").value.trim(),utr:document.getElementById("utr").value.trim(),paymentMethod:"UPI",paymentStatus:"Pending verification"};
+ if(!data.name||!data.mobile||!data.address||!data.city||!data.state||!data.pincode){alert("Please fill all address details.");return}
+ localStorage.setItem("velux_last_order",JSON.stringify(data));
+ if(AIRTABLE_FORM_URL){window.open(AIRTABLE_FORM_URL,"_blank");}
+ else{alert("Order details saved on this device. Add your Airtable public Form URL in the website settings to send the order form directly to Airtable.");}
+}
+render();save();
+</script>
+</body></html>
